@@ -15,9 +15,12 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        beage: '#f7f5f4',
+        'orange-light': '#faece6',
+      },
     },
   },
-  darkMode: 'class',
   plugins: [nextui()],
 };
 export default config;
