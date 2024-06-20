@@ -17,19 +17,14 @@ export default function Chat() {
   const questionType = searchParams.get('question');
   const questions = QUESTIONS[questionType as keyof typeof QUESTIONS];
   const validation = VALIDATIONS[questionType as keyof typeof VALIDATIONS];
-  const name = searchParams.get('name') || 'Você';
 
   if (!questions || !validation) {
-    return <div>Question not found</div>;
+    return <div className='text-default-700'>Question not found</div>;
   }
 
   return (
     <div className='mx-auto max-w-5xl'>
-      <MessagingChatWindow
-        name={name}
-        questions={questions}
-        validation={validation}
-      />
+      <MessagingChatWindow questions={questions} validation={validation} />
     </div>
   );
 }

@@ -9,14 +9,9 @@ import messagingChatConversations, {
   insertMessage,
   typingMessage,
 } from './messaging-chat-conversations';
-import { sleep } from '../utils/global';
 import { Question, QuestionOption } from '../models/questions';
-import {
-  CONSENT_FORM,
-  CONSENT_OPTIONS,
-  GREETING,
-  VALIDATIONS,
-} from '../contants/questions';
+import { CONSENT_FORM, CONSENT_OPTIONS, GREETING } from '../contants/questions';
+import { useRouter } from 'next/navigation';
 
 export interface Response {
   id: string;
@@ -24,7 +19,6 @@ export interface Response {
 }
 
 export type MessagingChatWindowProps = HTMLAttributes<HTMLDivElement> & {
-  name: string;
   questions: Question[];
   validation(res: Response[]): void;
 };
@@ -34,12 +28,14 @@ const responses: Response[] = [];
 const MessagingChatWindow = forwardRef<
   HTMLDivElement,
   MessagingChatWindowProps
->(({ name, questions, validation }) => {
+>(({ questions, validation }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [typing, setTyping] = useState(true);
   const [step, setStep] = useState(0);
   const [options, setOptions] = useState<QuestionOption[]>([]);
   const [blockAction, setBlockAction] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!responses.length) {
@@ -48,12 +44,12 @@ const MessagingChatWindow = forwardRef<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function sendMessage(texts: string[], name?: string) {
+  async function sendMessage(texts: string[], isRTL = false) {
     texts.forEach(async (text) => {
       text = text.replace(/\n/g, '<br />');
-      insertMessage(text, name);
+      insertMessage(text, isRTL);
     });
-    !name && setTyping(false);
+    !isRTL && setTyping(false);
     setTimeout(() => scrollToBottom(), 100);
   }
 
@@ -64,7 +60,7 @@ const MessagingChatWindow = forwardRef<
 
   async function firstMessages() {
     if (!messagingChatConversations.length) {
-      await sendMessage([`${GREETING()}, ${name}!`]);
+      await sendMessage([`${GREETING()}!`]);
     }
 
     if (step === 0) {
@@ -77,7 +73,7 @@ const MessagingChatWindow = forwardRef<
     console.log(message);
     const messageId = step === 0 ? 'consent' : questions[step - 1].id;
     responses.push({ id: messageId, message });
-    sendMessage([`${message.label} ${message.description}`], name);
+    sendMessage([`${message.label} ${message.description}`], true);
 
     if (step === 0) {
       if (!message.value) {
@@ -86,7 +82,7 @@ const MessagingChatWindow = forwardRef<
         ]);
         setBlockAction(true);
         setTimeout(() => {
-          window.location.href = 'https://blackskullpharma.com.br';
+          router.push(window.location.href + '&cancel=true');
         }, 3000);
         return;
       }

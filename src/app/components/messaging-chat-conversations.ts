@@ -11,15 +11,15 @@ export const typingMessage: MessagingChatMessageProps = {
 
 const messagingChatConversations: MessagingChatMessageProps[] = [];
 
-export function insertMessage(message: string, name?: string) {
+export function insertMessage(message: string, isRTL: boolean) {
   messagingChatConversations.push({
-    avatar: name
+    avatar: isRTL
       ? ''
       : 'https://img.freepik.com/fotos-premium/medico-homem-adulto-em-pe-no-escritorio-do-hospital_884296-298.jpg',
     message,
-    name: name || 'Especialista Blackskull Pharma',
+    name: isRTL ? 'Você' : 'Especialista Blackskull Pharma',
     time: getTime(),
-    isRTL: !!name,
+    isRTL,
   });
 }
 
