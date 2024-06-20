@@ -61,7 +61,7 @@ export const TADALAFILA_QUESTIONS: Question[] = [
         value: 'cardiovascular_disease',
       },
       {
-        label: 'Tenho',
+        label: 'Outro',
         hasDescription: true,
         value: true,
       },
