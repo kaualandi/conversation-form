@@ -32,7 +32,7 @@ const MessagingChatWindow = forwardRef<
   const [typing, setTyping] = useState(true);
   const [step, setStep] = useState(0);
   const [options, setOptions] = useState<QuestionOption[]>([]);
-  const [blockAction, setBlockAction] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [optionSelected, setOptionSelected] = useState<
     QuestionOption | undefined
   >();
@@ -81,7 +81,8 @@ const MessagingChatWindow = forwardRef<
         sendMessage([
           'Sendo assim, não poderei prosseguir, sinto muito, vou encerrar a conversa.',
         ]);
-        setBlockAction(true);
+        setLoading(true);
+        setOptions([]);
         setTimeout(() => {
           window.parent.postMessage(
             { type: 'form-response', action: 'cancel' },
@@ -100,7 +101,7 @@ const MessagingChatWindow = forwardRef<
   function sendMessageByStep() {
     if (!questions[step]) {
       sendMessage(['Obrigado pelas respostas, estamos validando...']);
-      setBlockAction(true);
+      setLoading(true);
       setOptions([]);
       validation(responses);
       return;
@@ -177,22 +178,19 @@ const MessagingChatWindow = forwardRef<
         </div>
         <div className='absolute bottom-0 mt-auto flex w-full flex-col bg-white px-2 pb-2'>
           {writeDescription ? (
-            !blockAction ? (
-              <MessagingChatInput
-                options={options}
-                submitMessage={submitMessage}
-                step={step}
-                setOptionSelected={setOptionSelected}
-                optionSelected={optionSelected}
-                writeDescription={writeDescription}
-                setWriteDescription={setWriteDescription}
-              />
-            ) : (
-              <Spinner size='lg' />
-            )
+            <MessagingChatInput
+              options={options}
+              submitMessage={submitMessage}
+              step={step}
+              setOptionSelected={setOptionSelected}
+              optionSelected={optionSelected}
+              writeDescription={writeDescription}
+              setWriteDescription={setWriteDescription}
+            />
           ) : (
             ''
           )}
+          {loading ? <Spinner size='lg' /> : ''}
         </div>
       </div>
     </div>
