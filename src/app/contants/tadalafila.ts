@@ -12,7 +12,7 @@ export const TADALAFILA_QUESTIONS: Question[] = [
         value: false,
       },
       {
-        label: 'Sim, tenho alergia',
+        label: 'Sim',
         hasDescription: true,
         value: true,
       },
@@ -30,7 +30,7 @@ export const TADALAFILA_QUESTIONS: Question[] = [
         value: false,
       },
       {
-        label: 'Sim, tive',
+        label: 'Sim',
         hasDescription: true,
         value: true,
       },
@@ -79,7 +79,7 @@ export const TADALAFILA_QUESTIONS: Question[] = [
         value: false,
       },
       {
-        label: 'Sim, uso',
+        label: 'Sim',
         hasDescription: true,
         value: true,
       },
