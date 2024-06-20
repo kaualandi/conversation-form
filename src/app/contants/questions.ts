@@ -21,8 +21,7 @@ export const CONSENT_FORM = [
   `a. Confirmo que todas as informações disponibilizadas por mim são verdadeiras;
 b. Tenho mais de 18 anos;
 c. Serei o único a consumir os produtos, se prescrito;
-d. Confirmo que li e estou de acordo com os termos e condições médicas;
-e. Declaro que gostaria de ter uma saúde sexual melhor.`,
+d. Confirmo que li e estou de acordo com os termos e condições médicas.`,
   `É preciso que concorde para prosseguir com o questionário.`,
 ];
 

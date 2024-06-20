@@ -4,7 +4,9 @@ import { Question } from '../models/questions';
 export const TADALAFILA_QUESTIONS: Question[] = [
   {
     id: 'tadalafila_allergy',
-    questions: ['Tem alergia a tadalafila?'],
+    questions: [
+      'Tem alergia a tadalafila ou a algum componente da formulação?',
+    ],
     options: [
       {
         label: 'Não',
