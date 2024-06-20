@@ -42,7 +42,7 @@ export const SEMAGLUTIDA_QUESTIONS: Question[] = [
   {
     id: 'are_allergic_of_medicines_in_formula',
     questions: [
-      'Tem alergia a algum medicamento da fórmula? (Semaglutida, Ondasentrona)',
+      'Tem alergia a algum medicamento da fórmula? (Semaglutida e Ondasentrona)',
     ],
     options: [
       {
