@@ -47,6 +47,14 @@ export const VALIDATIONS: Validations = {
     const isGrented = !res.find((r) => r.id === 'had_peptic_ulcer')?.message
       .value;
 
-    const flag = `${!isGrented ? 'block' : 'allow'}-tadalafila`;
+    if (isGrented) {
+      window.parent.postMessage(
+        { type: 'form-response', action: 'allow' },
+        '*'
+      );
+      return;
+    }
+
+    window.parent.postMessage({ type: 'form-response', action: 'deny' }, '*');
   },
 };
