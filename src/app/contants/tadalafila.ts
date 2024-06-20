@@ -1,6 +1,7 @@
+import { Response } from '../components/messaging-chat-window';
 import { Question } from '../models/questions';
 
-export const TAFALAFILA_QUESTIONS: Question[] = [
+export const TADALAFILA_QUESTIONS: Question[] = [
   {
     id: 'medication_allergy',
     questions: ['Tem alergia a algum medicamento? Se sim, qual? Descreva.'],
@@ -11,7 +12,7 @@ export const TAFALAFILA_QUESTIONS: Question[] = [
         value: false,
       },
       {
-        label: 'Sim, tenho alergia a ',
+        label: 'Sim, tenho alergia a:',
         hasDescription: true,
         value: true,
       },
@@ -29,7 +30,7 @@ export const TAFALAFILA_QUESTIONS: Question[] = [
         value: false,
       },
       {
-        label: 'Sim, tive ',
+        label: 'Sim, tive:',
         hasDescription: true,
         value: true,
       },
@@ -60,7 +61,7 @@ export const TAFALAFILA_QUESTIONS: Question[] = [
         value: 'cardiovascular_disease',
       },
       {
-        label: 'Tenho ',
+        label: 'Tenho:',
         hasDescription: true,
         value: true,
       },
@@ -79,7 +80,7 @@ export const TAFALAFILA_QUESTIONS: Question[] = [
         value: false,
       },
       {
-        label: 'Sim, uso ',
+        label: 'Sim, uso:',
         hasDescription: true,
         value: true,
       },
@@ -102,3 +103,20 @@ export const TAFALAFILA_QUESTIONS: Question[] = [
     ],
   },
 ];
+
+export const TADALAFILA_VALIDATION = (res: Response[]) => {
+  setTimeout(() => {
+    const isGrented = !res.find((r) => r.id === 'had_peptic_ulcer')?.message
+      .value;
+
+    if (isGrented) {
+      window.parent.postMessage(
+        { type: 'form-response', action: 'allow' },
+        '*'
+      );
+      return;
+    }
+
+    window.parent.postMessage({ type: 'form-response', action: 'deny' }, '*');
+  }, 3000);
+};

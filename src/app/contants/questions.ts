@@ -1,7 +1,8 @@
 import { insertMessage } from '../components/messaging-chat-conversations';
 import { Response } from '../components/messaging-chat-window';
 import { QuestionOption, Validations } from '../models/questions';
-import { TAFALAFILA_QUESTIONS } from './tadalafila';
+import { SEMAGLUTIDA_QUESTIONS, SEMAGLUTIDA_VALIDATION } from './semaglutida';
+import { TADALAFILA_QUESTIONS, TADALAFILA_VALIDATION } from './tadalafila';
 
 export function GREETING() {
   const date = new Date();
@@ -39,24 +40,11 @@ export const CONSENT_OPTIONS: QuestionOption[] = [
 ];
 
 export const QUESTIONS = {
-  tadalafila: TAFALAFILA_QUESTIONS,
+  tadalafila: TADALAFILA_QUESTIONS,
+  semaglutida: SEMAGLUTIDA_QUESTIONS,
 };
 
 export const VALIDATIONS: Validations = {
-  tadalafila: (res: Response[]) => {
-    setTimeout(() => {
-      const isGrented = !res.find((r) => r.id === 'had_peptic_ulcer')?.message
-        .value;
-
-      if (isGrented) {
-        window.parent.postMessage(
-          { type: 'form-response', action: 'allow' },
-          '*'
-        );
-        return;
-      }
-
-      window.parent.postMessage({ type: 'form-response', action: 'deny' }, '*');
-    }, 3000);
-  },
+  tadalafila: TADALAFILA_VALIDATION,
+  semaglutida: SEMAGLUTIDA_VALIDATION,
 };
