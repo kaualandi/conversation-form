@@ -89,6 +89,11 @@ const MessagingChatWindow = forwardRef<
         });
         setTimeout(() => {
           router.push(window.location.href + '&cancel=true');
+
+          window.parent.postMessage(
+            { type: 'urlChange', url: window.location.href },
+            '*'
+          );
         }, 3000);
         return;
       }
