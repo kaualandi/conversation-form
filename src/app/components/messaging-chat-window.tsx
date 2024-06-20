@@ -81,17 +81,9 @@ const MessagingChatWindow = forwardRef<
           'Sendo assim, não poderei prosseguir, sinto muito, vou encerrar a conversa.',
         ]);
         setBlockAction(true);
-        window.addEventListener('hashchange', function () {
-          parent.postMessage(
-            { type: 'urlChange', url: window.location.href },
-            '*'
-          );
-        });
         setTimeout(() => {
-          router.push(window.location.href + '&cancel=true');
-
           window.parent.postMessage(
-            { type: 'urlChange', url: window.location.href },
+            { type: 'form-response', action: 'cancel' },
             '*'
           );
         }, 3000);
