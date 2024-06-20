@@ -3,8 +3,8 @@ import { Question } from '../models/questions';
 
 export const TADALAFILA_QUESTIONS: Question[] = [
   {
-    id: 'medication_allergy',
-    questions: ['Tem alergia a algum medicamento? Se sim, qual? Descreva.'],
+    id: 'tadalafila_allergy',
+    questions: ['Tem alergia a tadalafila?'],
     options: [
       {
         label: 'Não',
@@ -13,7 +13,7 @@ export const TADALAFILA_QUESTIONS: Question[] = [
       },
       {
         label: 'Sim',
-        hasDescription: true,
+        hasDescription: false,
         value: true,
       },
     ],
@@ -89,10 +89,14 @@ export const TADALAFILA_QUESTIONS: Question[] = [
 
 export const TADALAFILA_VALIDATION = (res: Response[]) => {
   setTimeout(() => {
-    const isGrented = !res.find((r) => r.id === 'use_nitrate-based_medication')
+    const useNitrateMedication = res.find(
+      (r) => r.id === 'use_nitrate-based_medication'
+    )?.message.value;
+
+    const tadalafilaAllergy = res.find((r) => r.id === 'tadalafila_allergy')
       ?.message.value;
 
-    if (isGrented) {
+    if (!useNitrateMedication && !tadalafilaAllergy) {
       window.parent.postMessage(
         { type: 'form-response', action: 'allow' },
         '*'
