@@ -15,7 +15,7 @@ export const SEMAGLUTIDA_QUESTIONS: Question[] = [
         value: false,
       },
       {
-        label: 'Sim, tomo:',
+        label: 'Sim, tomo',
         hasDescription: true,
         value: true,
       },

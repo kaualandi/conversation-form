@@ -122,7 +122,7 @@ const MessagingChatInput = React.forwardRef<
               </div>
             </div>
           }
-          placeholder='Digite aqui...'
+          placeholder='Descreva...'
           radius='lg'
           value={message}
           variant='bordered'
