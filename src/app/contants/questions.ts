@@ -44,17 +44,19 @@ export const QUESTIONS = {
 
 export const VALIDATIONS: Validations = {
   tadalafila: (res: Response[]) => {
-    const isGrented = !res.find((r) => r.id === 'had_peptic_ulcer')?.message
-      .value;
+    setTimeout(() => {
+      const isGrented = !res.find((r) => r.id === 'had_peptic_ulcer')?.message
+        .value;
 
-    if (isGrented) {
-      window.parent.postMessage(
-        { type: 'form-response', action: 'allow' },
-        '*'
-      );
-      return;
-    }
+      if (isGrented) {
+        window.parent.postMessage(
+          { type: 'form-response', action: 'allow' },
+          '*'
+        );
+        return;
+      }
 
-    window.parent.postMessage({ type: 'form-response', action: 'deny' }, '*');
+      window.parent.postMessage({ type: 'form-response', action: 'deny' }, '*');
+    }, 3000);
   },
 };
