@@ -9,13 +9,17 @@ export default function Chat() {
   const questions = QUESTIONS[questionType as keyof typeof QUESTIONS];
   const validation = VALIDATIONS[questionType as keyof typeof VALIDATIONS];
 
-  if (!questions || !validation) {
+  if (!questionType || !questions || !validation) {
     return <div className='text-default-700'>Question not found</div>;
   }
 
   return (
     <div className='mx-auto max-w-5xl'>
-      <MessagingChatWindow questions={questions} validation={validation} />
+      <MessagingChatWindow
+        compositionName={questionType}
+        questions={questions}
+        validation={validation}
+      />
     </div>
   );
 }

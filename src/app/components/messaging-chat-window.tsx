@@ -18,6 +18,7 @@ export interface Response {
 }
 
 export type MessagingChatWindowProps = HTMLAttributes<HTMLDivElement> & {
+  compositionName: string;
   questions: Question[];
   validation(res: Response[]): void;
 };
@@ -27,7 +28,7 @@ const responses: Response[] = [];
 const MessagingChatWindow = forwardRef<
   HTMLDivElement,
   MessagingChatWindowProps
->(({ questions, validation }) => {
+>(({ compositionName, questions, validation }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [typing, setTyping] = useState(true);
   const [step, setStep] = useState(0);
@@ -139,7 +140,7 @@ const MessagingChatWindow = forwardRef<
               Questionário
             </div>
             <div className='mt-1 text-small text-default-500'>
-              Para produtos com Tadalafila
+              Para produtos com {compositionName}
             </div>
           </div>
         </div>
