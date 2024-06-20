@@ -6,7 +6,7 @@ export const SEMAGLUTIDA_QUESTIONS: Question[] = [
     id: 'are_you_diabetic',
     questions: [
       'Você é diabético? Se sim, quais medicamentos e doses você utiliza?',
-      'Aviso: Se você faz utilização de insulina ou pode ter risco de hipoglicemia',
+      'Aviso: Se você faz utilização de insulina pode ter risco de hipoglicemia',
     ],
     options: [
       {
