@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, forwardRef, HTMLAttributes, useState, useRef } from 'react';
-import { Button, ButtonGroup, ScrollShadow, Spinner } from '@nextui-org/react';
+import { Button, ScrollShadow, Spinner } from '@nextui-org/react';
 
 import MessagingChatMessage from './messaging-chat-message';
 import MessagingChatInput, { SubmitMessage } from './messaging-chat-input';
@@ -137,10 +137,10 @@ const MessagingChatWindow = forwardRef<
         <div className='h-17 flex items-center gap-2 border-y-small border-default-200 bg-white p-3 sm:p-4'>
           <div className='w-full'>
             <div className='text-small font-semibold text-default-900'>
-              Questionário
+              Teleconsulta
             </div>
             <div className='mt-1 text-small text-default-500'>
-              Para produtos com {compositionName}
+              Para formulações com {compositionName}
             </div>
           </div>
         </div>

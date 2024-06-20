@@ -70,8 +70,7 @@ export const TADALAFILA_QUESTIONS: Question[] = [
   {
     id: 'use_nitrate-based_medication',
     questions: [
-      'Você usa algum medicamento a base de nitrato? Se sim, qual?',
-      'Descreva as substâncias e os nomes comerciais',
+      'Você usa algum medicamento a base de nitrato? Se sim, qual?\nDescreva as substâncias e os nomes comerciais',
     ],
     options: [
       {
@@ -86,28 +85,12 @@ export const TADALAFILA_QUESTIONS: Question[] = [
       },
     ],
   },
-  {
-    id: 'had_peptic_ulcer',
-    questions: ['Já teve úlcera péptica?'],
-    options: [
-      {
-        label: 'Não',
-        hasDescription: false,
-        value: false,
-      },
-      {
-        label: 'Sim',
-        hasDescription: false,
-        value: true,
-      },
-    ],
-  },
 ];
 
 export const TADALAFILA_VALIDATION = (res: Response[]) => {
   setTimeout(() => {
-    const isGrented = !res.find((r) => r.id === 'had_peptic_ulcer')?.message
-      .value;
+    const isGrented = !res.find((r) => r.id === 'use_nitrate-based_medication')
+      ?.message.value;
 
     if (isGrented) {
       window.parent.postMessage(
