@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, forwardRef, HTMLAttributes, useState, useRef } from 'react';
-import { ScrollShadow, Spinner } from '@nextui-org/react';
+import { Button, ButtonGroup, ScrollShadow, Spinner } from '@nextui-org/react';
 
 import MessagingChatMessage from './messaging-chat-message';
 import MessagingChatInput, { SubmitMessage } from './messaging-chat-input';
@@ -11,7 +11,6 @@ import messagingChatConversations, {
 } from './messaging-chat-conversations';
 import { Question, QuestionOption } from '../models/questions';
 import { CONSENT_FORM, CONSENT_OPTIONS, GREETING } from '../contants/questions';
-import { useRouter } from 'next/navigation';
 
 export interface Response {
   id: string;
@@ -34,8 +33,10 @@ const MessagingChatWindow = forwardRef<
   const [step, setStep] = useState(0);
   const [options, setOptions] = useState<QuestionOption[]>([]);
   const [blockAction, setBlockAction] = useState(false);
-
-  const router = useRouter();
+  const [optionSelected, setOptionSelected] = useState<
+    QuestionOption | undefined
+  >();
+  const [writeDescription, setWriteDescription] = useState<boolean>(false);
 
   useEffect(() => {
     if (!responses.length) {
@@ -100,6 +101,7 @@ const MessagingChatWindow = forwardRef<
     if (!questions[step]) {
       sendMessage(['Obrigado pelas respostas, estamos validando...']);
       setBlockAction(true);
+      setOptions([]);
       validation(responses);
       return;
     }
@@ -108,6 +110,24 @@ const MessagingChatWindow = forwardRef<
     sendMessage(questions[step].questions);
     setOptions(questions[step].options);
   }
+
+  const onSelect = (option: QuestionOption) => {
+    console.log(option);
+    if (option.hasDescription) {
+      setOptionSelected(option);
+      console.log(option);
+
+      setWriteDescription(true);
+      return;
+    }
+
+    setWriteDescription(false);
+    submitMessage({
+      ...option,
+      description: '',
+    });
+    setOptionSelected(undefined);
+  };
 
   return (
     <div className='relative'>
@@ -141,17 +161,37 @@ const MessagingChatWindow = forwardRef<
             ) : (
               ''
             )}
+
+            {!writeDescription ? (
+              <div className='flex flex-col gap-2'>
+                {options.map((option, idx) => (
+                  <Button key={idx} onClick={() => onSelect(option)}>
+                    {option.label}
+                  </Button>
+                ))}
+              </div>
+            ) : (
+              ''
+            )}
           </ScrollShadow>
         </div>
         <div className='absolute bottom-0 mt-auto flex w-full flex-col bg-white px-2 pb-2'>
-          {!blockAction ? (
-            <MessagingChatInput
-              options={options}
-              submitMessage={submitMessage}
-              step={step}
-            />
+          {writeDescription ? (
+            !blockAction ? (
+              <MessagingChatInput
+                options={options}
+                submitMessage={submitMessage}
+                step={step}
+                setOptionSelected={setOptionSelected}
+                optionSelected={optionSelected}
+                writeDescription={writeDescription}
+                setWriteDescription={setWriteDescription}
+              />
+            ) : (
+              <Spinner size='lg' />
+            )
           ) : (
-            <Spinner size='lg' />
+            ''
           )}
         </div>
       </div>

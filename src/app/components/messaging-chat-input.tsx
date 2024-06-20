@@ -2,7 +2,7 @@
 
 import type { InputProps } from '@nextui-org/react';
 
-import React, { useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import {
   Button,
   Chip,
@@ -23,6 +23,10 @@ export interface SubmitMessage {
 export interface MessagingChatInputProps extends InputProps {
   options: QuestionOption[];
   submitMessage: (message: SubmitMessage) => void;
+  optionSelected: QuestionOption | undefined;
+  setOptionSelected: Dispatch<SetStateAction<QuestionOption | undefined>>;
+  writeDescription: boolean;
+  setWriteDescription: Dispatch<SetStateAction<boolean>>;
 }
 
 const MessageOptions = ({
@@ -55,57 +59,33 @@ const MessageOptions = ({
 const MessagingChatInput = React.forwardRef<
   HTMLInputElement,
   MessagingChatInputProps
->(({ options, submitMessage, ...props }) => {
-  const [selectValue, setSelectValue] = React.useState(new Set<number>());
-  const [message, setMessage] = React.useState<string>('');
-  const [optionSelected, setOptionSelected] = React.useState<
-    QuestionOption | undefined
-  >();
-  const [writeDescription, setWriteDescription] =
-    React.useState<boolean>(false);
+>(
+  ({
+    options,
+    submitMessage,
+    setOptionSelected,
+    optionSelected,
+    writeDescription,
+    setWriteDescription,
+    ...props
+  }) => {
+    const [message, setMessage] = React.useState<string>('');
 
-  useEffect(() => {
-    setWriteDescription(false);
-  }, [options]);
+    const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      if (writeDescription && optionSelected) {
+        submitMessage({
+          ...optionSelected,
+          description: message,
+        });
+        setMessage('');
+        setWriteDescription(false);
+        setOptionSelected(undefined);
+      }
+    };
 
-  const onSelect = (e: Set<number>) => {
-    const idx = (e as Set<number>).values().next().value;
-    const option = options[idx];
-    console.log(option);
-
-    if (!option) return;
-    if (option.hasDescription) {
-      setOptionSelected(option);
-      setWriteDescription(true);
-      return;
-    }
-
-    setWriteDescription(false);
-    submitMessage({
-      ...option,
-      description: '',
-    });
-    setSelectValue(new Set());
-    setOptionSelected(undefined);
-  };
-
-  const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (writeDescription && optionSelected) {
-      submitMessage({
-        ...optionSelected,
-        description: message,
-      });
-      setMessage('');
-      setSelectValue(new Set());
-      setWriteDescription(false);
-      setOptionSelected(undefined);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmitMessage}>
-      {writeDescription ? (
+    return (
+      <form onSubmit={handleSubmitMessage}>
         <Input
           aria-label='message'
           classNames={{
@@ -150,30 +130,10 @@ const MessagingChatInput = React.forwardRef<
           onValueChange={setMessage}
           {...props}
         />
-      ) : (
-        <Select
-          label='Selecione uma opção'
-          className='text-default-900'
-          classNames={{
-            listbox: 'text-default-900',
-            trigger: 'border-medium border-default-200 min-h-16',
-          }}
-          onSelectionChange={(e) => {
-            setSelectValue(e as Set<number>);
-            onSelect(e as Set<number>);
-          }}
-          selectedKeys={selectValue}
-        >
-          {options.map((opt, i) => (
-            <SelectItem key={i} value={opt as unknown as string}>
-              {opt.label}
-            </SelectItem>
-          ))}
-        </Select>
-      )}
-    </form>
-  );
-});
+      </form>
+    );
+  }
+);
 
 MessagingChatInput.displayName = 'MessagingChatInput';
 

@@ -1,15 +1,6 @@
 import { useSearchParams } from 'next/navigation';
-import MessagingChatWindow, {
-  Response,
-} from '../components/messaging-chat-window';
+import MessagingChatWindow from '../components/messaging-chat-window';
 import { QUESTIONS, VALIDATIONS } from '../contants/questions';
-import { Question } from '../models/questions';
-
-interface ChatProps {
-  name: string;
-  questions: Question[];
-  validation(res: Response[]): void;
-}
 
 export default function Chat() {
   const searchParams = useSearchParams();
