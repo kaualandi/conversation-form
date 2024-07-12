@@ -17,7 +17,7 @@ export function GREETING() {
 }
 
 export const CONSENT_FORM = [
-  'Primeiramente, preciso te passar o termo de concentimento',
+  'Primeiramente, preciso te passar o termo de consentimento',
   `a. Confirmo que todas as informações disponibilizadas por mim são verdadeiras;
 b. Tenho mais de 18 anos;
 c. Serei o único a consumir os produtos, se prescrito;
