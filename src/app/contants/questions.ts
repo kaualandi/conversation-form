@@ -1,6 +1,7 @@
 import { insertMessage } from '../components/messaging-chat-conversations';
 import { Response } from '../components/messaging-chat-window';
 import { QuestionOption, Validations } from '../models/questions';
+import { PROSTATEBLACK_QUESTIONS, PROSTATEBLACK_VALIDATION } from './PROSTATEBLACK';
 import { SEMAGLUTIDA_QUESTIONS, SEMAGLUTIDA_VALIDATION } from './semaglutida';
 import { TADALAFILA_QUESTIONS, TADALAFILA_VALIDATION } from './tadalafila';
 
@@ -41,9 +42,11 @@ export const CONSENT_OPTIONS: QuestionOption[] = [
 export const QUESTIONS = {
   tadalafila: TADALAFILA_QUESTIONS,
   semaglutida: SEMAGLUTIDA_QUESTIONS,
+  PROSTATEBLACK: PROSTATEBLACK_QUESTIONS,
 };
 
 export const VALIDATIONS: Validations = {
   tadalafila: TADALAFILA_VALIDATION,
   semaglutida: SEMAGLUTIDA_VALIDATION,
+  PROSTATEBLACK: PROSTATEBLACK_VALIDATION,
 };
